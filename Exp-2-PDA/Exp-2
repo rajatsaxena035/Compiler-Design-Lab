@@ -1,0 +1,25 @@
+Practical-2
+
+Objective: WAP to implement Push Down Automata.
+
+Theory:
+1. A pushdown automaton (PDA) is a type of automaton that employs a stack.
+2. Pushdown automata are used in theories about what can be computed by machines. 
+3. They are more capable than finite-state machines but less capable than Turing machines.
+4. Deterministic pushdown automata can recognize all deterministic context-free languages while nondeterministic ones can recognize all context-free languages.
+5. Deterministic pushdown automata is used in parser design.
+
+Formal Definition:
+
+A PDA is formally defined as a 7-tuple:
+
+M = ( Q ,   Σ ,   Γ ,   δ ,   q 0 ,   Z ,   F ) where
+
+    Q is a finite set of states
+    Σ is a finite set which is called the input alphabet
+    Γ is a finite set which is called the stack alphabet
+    δ is a finite subset of Q × ( Σ ∪ { ε } ) × Γ × Q × Γ* , the transition relation.
+    q0 ∈ Q , is the start state
+    Z ∈ Γ , is the initial stack symbol
+    F ⊆ Q , is the set of accepting states
+

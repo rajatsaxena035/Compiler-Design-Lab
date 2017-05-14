@@ -1,0 +1,111 @@
+Practical-1
+
+Objective: Introduction to LEX and YACC tools.
+
+Theory:
+
+LEX:
+
+1. Lex is a computer program that generates lexical analyzers ("scanners" or "lexers").
+2. Lex was originally written by Mike Lesk & Eric Schmidt and described in 1975. 
+3. It is the standard lexical analyzer generator on many Unix systems, and an equivalent tool is specified as part of the POSIX standard.
+4. Lex reads an input stream specifying the lexical analyzer and outputs source code implementing the lexer in the C programming language.
+5. Though originally distributed as proprietary software, some versions of Lex are now open source.
+6. Open source versions of Lex, based on the original AT&T code are now distributed as open source systems such as OpenSolaris and Plan 9 from Bell Labs.
+7. One popular open source version of Lex, called flex, or the "fast lexical analyzer", is not derived from proprietary code.
+
+Structure of a Lex file:
+
+The Files are divided into three sections, separated by lines that contain only two percent signs, as follows:
+
+Definition section
+%%
+Rules section
+%%
+C code section
+
+* The definition section defines macros and imports header files written in C. It is also possible to write any C code here, which will be copied verbatim into the generated source file.
+* The rules section associates regular expression patterns with C statements. When the lexer sees text in the input matching a given pattern, it will execute the associated C code.
+* The C code section contains C statements and functions that are copied verbatim to the generated source file. These statements presumably contain code called by the rules in the rules section. In large programs it is more convenient to place this code in a separate file linked in at compile time.
+
+Example of a Lex File:
+
+The following is an example Lex file for the flex version of Lex. It recognizes strings of numbers (positive integers) in the input, and simply prints them out. If this input is given to flex, it will be converted into a C file, lex.yy.c. This can be compiled into an executable which matches and outputs strings of integers.
+
+
+Program:
+
+/*** Definition section ***/
+
+%{
+/* C code to be copied verbatim */
+#include <stdio.h>
+%}
+
+/* This tells flex to read only one input file */
+%option noyywrap
+
+%%
+    /*** Rules section ***/
+
+    /* [0-9]+ matches a string of one or more digits */
+[0-9]+  {
+            /* yytext is a string containing the matched text. */
+            printf("Saw an integer: %s\n", yytext);
+        }
+
+.|\n    {   /* Ignore all other characters. */   }
+
+%%
+/*** C Code section ***/
+
+int main(void)
+{
+    /* Call the lexer, then quit. */
+    yylex();
+    return 0;
+}
+
+Input:
+abc123z.!&*2gj6
+
+Output:
+Saw an integer: 123
+Saw an integer: 2
+Saw an integer: 6
+
+Other Implementation:
+1. Flex
+
+--------------------------------------------------------------------------------------------
+
+YACC:
+
+1. Yacc is a computer program for the Unix operating system.
+2. t is a Look Ahead Left-to-Right (LALR) parser generator, generating a parser, the part of a compiler that tries to make syntactic sense of the source code, specifically a LALR parser, based on an analytic grammar written in a notation similar to Backus–Naur Form (BNF).
+3. Yacc itself used to be available as the default parser generator on most Unix systems, though it has since been supplanted as the default by more recent, largely compatible, programs.
+4. YACC is an acronym for "Yet Another Compiler Compiler".
+5. It was originally developed in the early 1970s by Stephen C. Johnson at AT&T Corporation and written in the B programming language, but soon rewritten in C.
+6. It appeared as part of Version 3 Unix and a full description of Yacc was published in 1975.
+7. Yacc and Lex are commonly used together.
+8. Some versions of AT&T Yacc have become open source. 
+
+Practical:
+
+1. The input to Yacc is a grammar with snippets of C code (called "actions") attached to its rules.
+2. Its output is a shift-reduce parser in C that executes the C snippets associated with each rule as soon as the rule is recognized.
+3. Typical actions involve the construction of parse trees.
+
+Example:
+
+If the call node(label, left, right) constructs a binary parse tree node with the specified label and children, then the rule:
+
+expr : expr '+' expr  { $$ = node('+', $1, $3); }
+
+recognizes summation expressions and constructs nodes for them. The special identifiers $$, $1 and $3 refer to items on the parser's stack.
+ 
+Other Implementations:
+1. Berkeley Yacc
+2. GNU bison
+3. MKS Yacc
+4. Abraxas PCYACC. 
