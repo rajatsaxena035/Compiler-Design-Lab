@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1470138503 source:/media/rajat/Work/code-blocks/PDA/main.cpp
+	<iostream>
+	<stack>
+

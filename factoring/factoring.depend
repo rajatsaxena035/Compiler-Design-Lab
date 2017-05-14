@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1475540548 source:/media/rajat/Work1/code-blocks/factoring/main.cpp
+	<iostream>
+	<set>
+	<string>
+
